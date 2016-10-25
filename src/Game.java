@@ -51,10 +51,21 @@ public class Game {
 
             doc.move(row, col);
 
+            // move only if not crashed
+            if(!dalek1.hasCrashed()){
             dalek1.advanceTowards(doc);
+            }
+            if(!dalek2.hasCrashed()){
             dalek2.advanceTowards(doc);
+            }
+            if(!dalek3.hasCrashed()){
             dalek3.advanceTowards(doc);
-
+            }
+            
+            if(dalek1.hasCrashed() || dalek2.hasCrashed() || dalek3.hasCrashed()){
+                board.putPeg(Color.RED, dalek1.getRow(), dalek1.getCol());
+            }
+            
             // put peg at the click
             board.putPeg(Color.GREEN, doc.getRow(), doc.getCol());
 
@@ -62,18 +73,6 @@ public class Game {
             board.putPeg(Color.YELLOW, dalek1.getRow(), dalek1.getCol());
             board.putPeg(Color.YELLOW, dalek2.getRow(), dalek2.getCol());
             board.putPeg(Color.YELLOW, dalek3.getRow(), dalek3.getCol());
-            
-            // hasCrashed
-            if(dalek1.hasCrashed() == true){
-                board.putPeg(Color.RED, dalek1.getRow(), dalek1.getCol());
-            }
-            if(dalek2.hasCrashed() == true){
-                board.putPeg(Color.RED, dalek2.getRow(), dalek2.getCol());
-            }
-            if(dalek3.hasCrashed() == true){
-                board.putPeg(Color.RED, dalek3.getRow(), dalek3.getCol());
-            }
-            
         }
     }
 }
