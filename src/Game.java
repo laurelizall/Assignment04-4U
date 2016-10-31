@@ -61,22 +61,25 @@ public class Game {
             doc.move(row, col);
             
             // daleks crash
-            // 1 & 2
+            // 1 & 2 - remove black, place red
             if (dalek1.getCol() == dalek2.getCol() && dalek1.getRow() == dalek2.getRow()){
                 dalek1.crash();
                 dalek2.crash();
+                board.removePeg(dalek1.getRow(), dalek1.getCol());
                 board.putPeg(Color.RED, dalek1.getRow(), dalek1.getCol());
             }
             // 1 & 3
-            if (dalek1.getCol() == dalek3.getCol() && dalek1.getRow() == dalek3.getRow() ){
+            else if (dalek1.getCol() == dalek3.getCol() && dalek1.getRow() == dalek3.getRow() ){
                 dalek1.crash();
                 dalek3.crash();
+                board.removePeg(dalek1.getRow(), dalek1.getCol());
                 board.putPeg(Color.RED, dalek1.getRow(), dalek1.getCol());
             }
             // 3 & 2
-            if (dalek3.getCol() == dalek2.getCol() && dalek3.getRow() == dalek2.getRow() ){
+            else if (dalek3.getCol() == dalek2.getCol() && dalek3.getRow() == dalek2.getRow() ){
                 dalek3.crash();
                 dalek2.crash();
+                board.removePeg(dalek2.getRow(), dalek2.getCol());
                 board.putPeg(Color.RED, dalek2.getRow(), dalek2.getCol());
             }
             
@@ -84,12 +87,14 @@ public class Game {
             if (dalek1.getCol() == doc.getCol() && dalek1.getRow() == doc.getRow() ||
                     dalek2.getCol() == doc.getCol() && dalek2.getRow() == doc.getRow() || 
                         dalek3.getCol() == doc.getCol() && dalek3.getRow() == doc.getRow()){
+                board.putPeg(Color.YELLOW, doc.getRow(), doc.getCol());
                 board.displayMessage("YOU WERE CAPTURED. GAME OVER");
                 break;
             }
             
             // Win Game - all Daleks have crashed
             if (dalek1.hasCrashed() && dalek2.hasCrashed() && dalek3.hasCrashed()){
+                board.putPeg(Color.GREEN, doc.getRow(), doc.getCol());
                 board.displayMessage("YOU DEFEATED THE DALEKS.");
                 break;
             }
@@ -104,22 +109,26 @@ public class Game {
             if (dalek3.hasCrashed() == false) {
                 dalek3.advanceTowards(doc);
             }
+            
+            // Daleks
+            board.putPeg(Color.BLACK, dalek1.getRow(), dalek1.getCol());
+            board.putPeg(Color.BLACK, dalek2.getRow(), dalek2.getCol());
+            board.putPeg(Color.BLACK, dalek3.getRow(), dalek3.getCol());
 
             // if hasCrashed, then place a red peg
             if (dalek1.hasCrashed()) {
+                board.removePeg(dalek1.getRow(), dalek1.getCol());
                 board.putPeg(Color.RED, dalek1.getRow(), dalek1.getCol());
             } else if (dalek2.hasCrashed()) {
+                board.removePeg(dalek2.getRow(), dalek2.getCol());
                 board.putPeg(Color.RED, dalek2.getRow(), dalek2.getCol());
             } else if (dalek3.hasCrashed()) {
+                board.removePeg(dalek3.getRow(), dalek3.getCol());
                 board.putPeg(Color.RED, dalek3.getRow(), dalek3.getCol());
             }
             
             // put peg at the click
             board.putPeg(Color.WHITE, doc.getRow(), doc.getCol());
-            // Daleks
-            board.putPeg(Color.BLACK, dalek1.getRow(), dalek1.getCol());
-            board.putPeg(Color.BLACK, dalek2.getRow(), dalek2.getCol());
-            board.putPeg(Color.BLACK, dalek3.getRow(), dalek3.getCol());
         }
     }
 }
